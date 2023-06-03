@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>КОРЗИНА</title>
+</head>
+<body>
+
+  <section class="navigation">
+    <div class="navigation-logo"> 
+      <img src="/static/img/index/header_2.png" alt="">
+      СПОРТТОВАРЫ
+    </div>
+    <div class="navigation-menu">
+        <a class="navigation-item" href="{% url 'index' %}#catalog">Каталог</a>
+        <a class="navigation-item" href="{% url 'index' %}#about">О нас</a>
+        <a class="navigation-item" href="#contacts">Контакты</a>
+    </div>
+    <a class="navigation-shopping_cart" href="{% url 'shopping_cart' %}">
+      <img src="/static/img/index/header_1.png" alt="">
+      <div class="navigation-shopping_cart-products-count">{{my_products_count}}</div>
+      товаров на {{my_products_sum}}р.
+    </a>
+  </section> 
+
+    
+      <section class="my-products">
+        <div class="my-products-content">
+          <p class="my-products-title">КОРЗИНА</p>
+
+          {% if my_products %}
+            <table>
+              <tr>
+                <td class="my-products-table-titles">Фото</td>
+                <td class="my-products-table-titles">Наименование</td>
+                <td class="my-products-table-titles">Модель</td>
+                <td class="my-products-table-titles">Цена</td>
+              </tr>
+
+              {% for product in my_products %}
+                <tr class="my-products-item">
+                  <td><img src="{{product.image_url}}" alt="" width="86"></td>
+                  <td class="my-product-title">{{product.title}}</td>
+                  <td class="my-product-model">{{product.model}}</td>
+                  <td class="my-product-price">{{product.price}}р</td>
+                </tr>
+              {% endfor %}
+            </table>
+
+            <a class="my-products-buy-btn" href="#">К ОФОРМЛЕНИЮ</a>
+            <a class="catalog-item-buy-btn my-products-continue-btn" href="{% url 'index' %}">ПРОДОЛЖИТЬ ПОКУПКИ</a>
+
+            <form action="{% url 'shopping_cart' %}" method="post">
+              {% csrf_token %}
+              <input class="catalog-item-buy-btn clear-cart-btn" type="submit" name="clear_cart" value="ОЧИСТИТЬ КОРЗИНУ">
+            </form>
+
+          {% else %}
+            <h1>КОРЗИНА ПУСТА</h1>
+            <a class="catalog-item-buy-btn" href="{% url 'index' %}">ПРОДОЛЖИТЬ ПОКУПКИ</a>
+          {% endif %}
+
+        </div>
+      </section>
+
+      <footer id="contacts">
+        <div class="footer-part-1">
+          <p>О НАШЕМ МАГАЗИНЕ</p>
+          <p>Вы можете заказать понравившийся товар в нашем интернет магазине.</p>
+          <p>Мы вам его привезем прямо домой.</p>
+        </div>
+        <div class="footer-part-2">
+          <p>8 947 828 27 82</p>
+          <span>Оплата наличными <br>при доставке.</span>
+        </div>
+      </footer>
+    
+</body>
+</html>

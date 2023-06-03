@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="/static/js/itc-slider.js" defer></script>
+   <link rel="stylesheet" href="{% static 'itc-slider.css' %}">
+    <title>СПОРТТОВАРЫ</title>
+</head>
+<body>
+
+  <section class="navigation">
+    <div class="navigation-logo"> 
+      <img src="/static/img/index/header_2.png" alt="">
+      СПОРТТОВАРЫ
+    </div>
+    <div class="navigation-menu">
+        <a class="navigation-item" href="#catalog">Каталог</a>
+        <a class="navigation-item" href="#about">О нас</a>
+        <a class="navigation-item" href="#contacts">Контакты</a>
+    </div>
+    <a class="navigation-shopping_cart" href="{% url 'shopping_cart' %}">
+      <img src="/static/img/index/header_1.png" alt="">
+      <div class="navigation-shopping_cart-products-count">{{my_products_count}}</div>
+      товаров на {{my_products_sum}}р.
+    </a>
+  </section> 
+
+  <section class="main-screen" id="about">
+    <div class="slideshow">
+      <div class="slideshow-item">
+        <img src="/static/img/index/main_1.jpg" alt="">
+      </div>
+      <div class="slideshow-item">
+        <img src="/static/img/index/main_2.jpg" alt="">
+      </div>
+      <div class="slideshow-item">
+        <img src="/static/img/index/main_3.jpg" alt="">
+      </div>
+      <div class="slideshow-item">
+        <img src="/static/img/index/main_4.jpg" alt="">
+      </div>
+      <div class="slideshow-item">
+        <img src="/static/img/index/main_5.jpg" alt="">
+      </div>
+    </div>
+    <div class="main-text">
+      <p>Сеть специализированных спортивных магазинов «СПОРТТОВАРЫ».</p>
+      <span>Cнаряжение, одежда, обувь и аксессуары для активного отдыха и спорта! </span>
+    </div>
+  </section>
+  
+  <section class="about">
+    <p>Велосипеды горные, шоссейные и bmx, роликовые коньки, скейтборды, лонгборды и самокаты, горные и беговые лыжи, сноуборды, ледовые коньки и хоккейная экипировка, товары для альпинизма и скалолазания, туристическое снаряжение. Интернет-магазин с доставкой по всей России!</p>
+  </section>
+
+  <section class="catalog" id="catalog">
+    <div class="catalog-content">
+      <p class="catalog-title">КАТАЛОГ</p>
+    </div>
+    <div class="catalog-slider">
+        <div class="itc-slider catalog-slider" data-slider="itc-slider" data-loop="false" data-autoplay="false">
+
+          <div class="itc-slider-wrapper">
+           <div class="itc-slider-items catalog-slider-item"> 
+              {% for product in all_products %}
+               <div class="itc-slider-item">
+                  <img src="{{product.image_url}}" alt="">
+                  <a class="catalog-item-detail" href="{% url 'detail' product.id %}">
+                  <h2>{{product.title}} {{product.model}}</h2>
+                  </a>
+                  <p>{{product.price}}р</p>
+                 
+                  <form action="{% url 'index' %}" method="post">
+                    {% csrf_token %}
+                    <input type='hidden' name="product_id" value="{{product.id}}"/>
+                    <input class="catalog-item-buy-btn" type="submit" name="buy_btn" value="КУПИТЬ">
+                  </form>
+
+               </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <button class="itc-slider-btn itc-slider-btn-prev"></button>
+          <button class="itc-slider-btn itc-slider-btn-next"></button>
+        </div>
+    </div>
+  </section>
+
+  <footer id="contacts">
+    <div class="footer-part-1">
+      <p>О НАШЕМ МАГАЗИНЕ</p>
+      <p>Вы можете заказать понравившийся товар в нашем интернет магазине.</p>
+      <p>Мы вам его привезем прямо домой.</p>
+    </div>
+    <div class="footer-part-2">
+      <p>8 947 828 27 82</p>
+      <span>Оплата наличными <br>при доставке.</span>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+
+
+

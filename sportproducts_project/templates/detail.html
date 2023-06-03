@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>{{product.title}} {{product.model}}</title>
+</head>
+<body>
+
+  <section class="navigation">
+    <div class="navigation-logo"> 
+      <img src="/static/img/index/header_2.png" alt="">
+      СПОРТТОВАРЫ
+    </div>
+    <div class="navigation-menu">
+        <a class="navigation-item" href="{% url 'index' %}#catalog">Каталог</a>
+        <a class="navigation-item" href="{% url 'index' %}#about">О нас</a>
+        <a class="navigation-item" href="#contacts">Контакты</a>
+    </div>
+    <a class="navigation-shopping_cart" href="{% url 'shopping_cart' %}">
+      <img src="/static/img/index/header_1.png" alt="">
+      <div class="navigation-shopping_cart-products-count">{{my_products_count}}</div>
+      товаров на {{my_products_sum}}р.
+    </a>
+  </section> 
+
+    <section class="product-info">
+      <div class="product-info-content">
+        <p class="product-info-title">О ТОВАРЕ</p>
+      </div>
+      <div class="product-info-part-1">
+        <img src="{{product.image_url}}" alt="">
+        <div class="product-discription">
+          <h2>Описание</h2>
+          <p>{{product.discription}}</p>
+        </div>
+      </div>
+      <div class="product-info-part-2">
+        <div class="product-title">
+          {{product.title}} {{product.model}}
+        </div>
+        <div class="product-property">
+          <p>Производитель: Lorem ipsum</p>
+          <p>Наличие: Есть в наличии</p>
+          <p>Модель: {{product.model}}</p>
+          <p>Длина: 0 см x </p>
+          <p>Ширина: 0 см x </p>
+          <p>Высота: 0 см</p>
+        </div>
+        <div class="product-info-buy">
+          <div class="product-price">
+            {{product.price}}р.
+          </div>
+
+          <form action="{% url 'detail' product.id %}" method="post">
+            {% csrf_token %}
+            <input class="product-info-buy-btn" type="submit" name="buy_btn" value="КУПИТЬ">
+          </form>
+        
+        </div>
+      </div>
+    </section>
+
+    <footer id="contacts">
+      <div class="footer-part-1">
+        <p>О НАШЕМ МАГАЗИНЕ</p>
+        <p>Вы можете заказать понравившийся товар в нашем интернет магазине.</p>
+        <p>Мы вам его привезем прямо домой.</p>
+      </div>
+      <div class="footer-part-2">
+        <p>8 947 828 27 82</p>
+        <span>Оплата наличными <br>при доставке.</span>
+      </div>
+    </footer>
+    
+</body>
+</html>
